@@ -9,7 +9,6 @@ import 'package:ai_translate/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_compression_flutter/image_compression_flutter.dart';
 
 class IBaseRepository {
   final int timeoutInSeconds = 30;
@@ -63,37 +62,37 @@ class IBaseRepository {
     }
   }
 
-  Future<Response> clientPostMultipartData(
-    String uri,
-    Map<String, String> body,
-    List<MultipartBody> multipartBody, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      debugPrint('====> API Call: $uri\nHeader: ${getAuthorizationHeader()}');
-      debugPrint('====> API Body: $body with ${multipartBody.length} files');
-      http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse(AppConstants.baseUrl + uri));
-      request.headers.addAll(headers ?? getAuthorizationHeader());
+  // Future<Response> clientPostMultipartData(
+  //   String uri,
+  //   Map<String, String> body,
+  //   List<MultipartBody> multipartBody, {
+  //   Map<String, String>? headers,
+  // }) async {
+  //   try {
+  //     debugPrint('====> API Call: $uri\nHeader: ${getAuthorizationHeader()}');
+  //     debugPrint('====> API Body: $body with ${multipartBody.length} files');
+  //     http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse(AppConstants.baseUrl + uri));
+  //     request.headers.addAll(headers ?? getAuthorizationHeader());
 
-      for (MultipartBody multipart in multipartBody) {
-        if (multipart.file != null) {
-          File file = File(multipart.file!.path);
-          request.files.add(http.MultipartFile(
-            multipart.key,
-            file.readAsBytes().asStream(),
-            file.lengthSync(),
-            filename: file.path.split('/').last,
-          ));
-        }
-      }
+  //     for (MultipartBody multipart in multipartBody) {
+  //       if (multipart.file != null) {
+  //         File file = File(multipart.file!.path);
+  //         request.files.add(http.MultipartFile(
+  //           multipart.key,
+  //           file.readAsBytes().asStream(),
+  //           file.lengthSync(),
+  //           filename: file.path.split('/').last,
+  //         ));
+  //       }
+  //     }
 
-      request.fields.addAll(body);
-      http.Response response = await http.Response.fromStream(await request.send());
-      return handleResponse(response, uri);
-    } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
+  //     request.fields.addAll(body);
+  //     http.Response response = await http.Response.fromStream(await request.send());
+  //     return handleResponse(response, uri);
+  //   } catch (e) {
+  //     return Response(statusCode: 1, statusText: noInternetMessage);
+  //   }
+  // }
 
   Future<Response> clientPutData(String uri, dynamic body, {Map<String, String>? headers}) async {
     try {
@@ -169,9 +168,9 @@ class IBaseRepository {
   }
 }
 
-class MultipartBody {
-  String key;
-  XFile? file;
+// class MultipartBody {
+//   String key;
+//   XFile? file;
 
-  MultipartBody(this.key, this.file);
-}
+//   MultipartBody(this.key, this.file);
+// }
