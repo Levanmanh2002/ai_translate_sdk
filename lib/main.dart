@@ -51,6 +51,12 @@ class _MyAppState extends State<MyApp> {
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          scaffoldBackgroundColor: appTheme.whiteColor,
+          dialogBackgroundColor: appTheme.whiteColor,
+          appBarTheme: AppBarTheme.of(context).copyWith(
+            backgroundColor: appTheme.whiteColor,
+            surfaceTintColor: appTheme.whiteColor,
+          ),
           primarySwatch: MaterialColor(
             appTheme.appColor.value,
             <int, Color>{
@@ -67,6 +73,8 @@ class _MyAppState extends State<MyApp> {
             },
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          splashColor: appTheme.transparentColor,
+          highlightColor: appTheme.transparentColor,
         ),
         initialRoute: Routes.SPLASH,
         getPages: AppPages.pages,
