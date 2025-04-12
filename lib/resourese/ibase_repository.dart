@@ -26,7 +26,13 @@ class IBaseRepository {
 
   getAuthorizationHeader() {
     return {
-      'Content-Type': 'application/json; charset=UTF-8',
+      // 'Content-Type': 'application/json; charset=UTF-8',
+      'lang': 'vn',
+      'gmt': '1',
+      'os-name': '.',
+      'os-version': '.',
+      'app-version': '.',
+      'uuid': '.',
     };
   }
 
@@ -52,7 +58,7 @@ class IBaseRepository {
       http.Response response = await http
           .post(
             Uri.parse(AppConstants.baseUrl + uri),
-            body: jsonEncode(body),
+            body: body,
             headers: headers ?? getAuthorizationHeader(),
           )
           .timeout(Duration(seconds: timeoutInSeconds));

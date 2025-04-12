@@ -46,6 +46,13 @@ class StyleThemeData {
         height: height.h,
       );
 
+  static TextStyle size12Weight600({Color? color, double height = 1.5}) => TextStyle(
+        fontSize: 12.fontSize,
+        fontWeight: FontWeight.w600,
+        color: color ?? appTheme.blackColor,
+        height: height.h,
+      );
+
   static TextStyle size12Weight700({Color? color, double height = 1.5}) => TextStyle(
         fontSize: 12.fontSize,
         fontWeight: FontWeight.w700,

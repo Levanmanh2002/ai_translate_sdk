@@ -1,3 +1,5 @@
+import 'package:ai_translate/pages/chats/chats_binding.dart';
+import 'package:ai_translate/pages/chats/chats_page.dart';
 import 'package:ai_translate/pages/dashboard/dashboard_binding.dart';
 import 'package:ai_translate/pages/dashboard/dashboard_page.dart';
 import 'package:ai_translate/pages/splash/splash_binding.dart';
@@ -17,6 +19,11 @@ abstract class AppPages {
       name: Routes.DASHBOARD,
       page: () => DashboardPage(),
       binding: DashboardBinding(),
+    ),
+    GetPage(
+      name: Routes.CHATS,
+      page: () => ChatsPage(),
+      binding: ChatsBinding(),
     ),
   ];
 }
