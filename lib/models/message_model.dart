@@ -7,6 +7,7 @@ class ChatMessage {
   String? type;
   String? chatRoomId;
   String? content;
+  String? audio;
   String? sender;
   String? createdAt;
   String? repliedFrom;
@@ -18,6 +19,7 @@ class ChatMessage {
     this.type,
     this.chatRoomId,
     this.content,
+    this.audio,
     this.sender,
     this.createdAt,
     this.repliedFrom,
@@ -29,4 +31,8 @@ class ChatMessage {
   factory ChatMessage.fromJson(Map<String, dynamic> json) => _$ChatMessageFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
+
+  static List<ChatMessage> listFromJson(List<dynamic> jsonList) {
+    return jsonList.map((json) => ChatMessage.fromJson(json)).toList();
+  }
 }

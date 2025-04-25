@@ -6,7 +6,6 @@ import 'package:ai_translate/pages/home/home_controller.dart';
 import 'package:ai_translate/theme/style/style_theme.dart';
 import 'package:ai_translate/utils/app/app_enum.dart';
 import 'package:ai_translate/utils/icons_assets.dart';
-import 'package:ai_translate/widget/default_app_bar.dart';
 import 'package:ai_translate/widget/image_asset_custom.dart';
 import 'package:ai_translate/widget/reponsive/extension.dart';
 import 'package:app_settings/app_settings.dart';
@@ -19,20 +18,26 @@ class ChatsPage extends GetWidget<ChatsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.blueFFColor,
-      appBar: DefaultAppBar(
-        title: 'Đối thoại AI',
+      appBar: AppBar(
+        title: Text('Đối thoại AI', style: StyleThemeData.size16Weight600()),
         actions: [
-          Obx(
-            () => SizedBox(
+          Obx(() {
+            final filteredLanguages = Languages.values.where((lang) => lang != controller.fromLang.value).toList();
+
+            if (!filteredLanguages.contains(controller.selectedLanguage.value)) {
+              controller.selectedLanguage.value = filteredLanguages.first;
+            }
+
+            return SizedBox(
               height: 40.h,
               child: DropdownButtonHideUnderline(
                 child: DropdownButton2<Languages>(
                   value: controller.selectedLanguage.value,
-                  items: Languages.values.map((lang) {
+                  items: filteredLanguages.map((lang) {
                     return DropdownMenuItem<Languages>(
                       value: lang,
                       child: Text(
-                        controller.languageLabels[lang]!,
+                        controller.languageLabels[lang] ?? '',
                         style: StyleThemeData.size14Weight400(),
                       ),
                     );
@@ -55,8 +60,8 @@ class ChatsPage extends GetWidget<ChatsController> {
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          }),
           SizedBox(width: 12.w),
         ],
       ),

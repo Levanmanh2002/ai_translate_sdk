@@ -44,8 +44,10 @@ class MessageListWidget extends StatelessWidget {
                     color: isCurrentUser ? appTheme.whiteColor : appTheme.blackColor,
                   ),
                 ),
-                SizedBox(height: 4.h),
-                ImageAssetCustom(imagePath: IconsAssets.audioBorderIcon, size: 24.w),
+                if (audio.isNotEmpty) ...[
+                  SizedBox(height: 4.h),
+                  ImageAssetCustom(imagePath: IconsAssets.audioBorderIcon, size: 24.w),
+                ],
               ],
             ),
           ),

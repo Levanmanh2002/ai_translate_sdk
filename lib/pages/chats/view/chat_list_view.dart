@@ -1,5 +1,7 @@
 import 'package:ai_translate/pages/chats/chats_controller.dart';
 import 'package:ai_translate/pages/chats/widget/message_list_widget.dart';
+import 'package:ai_translate/utils/local_storage.dart';
+import 'package:ai_translate/utils/shared_key.dart';
 import 'package:ai_translate/widget/reponsive/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,7 @@ class ChatListView extends GetView<ChatsController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final data = controller.translateList;
+      final data = controller.chatList;
       if (data.isEmpty) {
         return const SizedBox();
       }
@@ -22,18 +24,35 @@ class ChatListView extends GetView<ChatsController> {
         itemBuilder: (context, int index) {
           final item = data[index];
 
+          final List<dynamic> originalList = LocalStorage.getJSON(SharedKey.chatMessage) as List<dynamic>? ?? [];
+
+          final originalItem = originalList.firstWhere(
+            (e) => e['id'] == item.id,
+            orElse: () => null,
+          );
+
           return Padding(
             padding: padding(horizontal: 12, vertical: 2),
-            child: MessageListWidget(
-              text: item.data?.transcript ?? '',
-              audio: item.data?.audio ?? '',
-              isCurrentUser: true,
-              onTap: () async {
-                if (item.data?.audio == null || item.data?.audio == '') {
-                  return;
-                }
-                await controller.playOrPause(item.data?.audio ?? '');
-              },
+            child: Column(
+              children: [
+                if (originalItem != null)
+                  MessageListWidget(
+                    text: '${originalItem['text']}',
+                    audio: '',
+                    isCurrentUser: true,
+                  ),
+                MessageListWidget(
+                  text: item.content ?? '',
+                  audio: item.audio ?? '',
+                  isCurrentUser: false,
+                  onTap: () async {
+                    if (item.audio == null || item.audio == '') {
+                      return;
+                    }
+                    await controller.playOrPause(item.audio ?? '');
+                  },
+                ),
+              ],
             ),
           );
         },

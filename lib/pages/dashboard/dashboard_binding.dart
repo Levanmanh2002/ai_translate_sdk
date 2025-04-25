@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class DashboardBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(DashboardController());
+    Get.put(DashboardController(authRepository: Get.find()));
     Get.put(HomeController());
     Get.put(ProfileController());
   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:ai_translate/models/response/error_response.dart';
@@ -6,6 +7,7 @@ import 'package:ai_translate/routes/pages.dart';
 import 'package:ai_translate/utils/app_constants.dart';
 import 'package:ai_translate/utils/dialog_util.dart';
 import 'package:ai_translate/utils/local_storage.dart';
+import 'package:ai_translate/utils/shared_key.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -25,23 +27,36 @@ class IBaseRepository {
   }
 
   getAuthorizationHeader() {
+    final token = LocalStorage.getString(SharedKey.token);
+
+    log('====> API Token: $token');
+
     return {
-      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
       'lang': 'vn',
       'gmt': '1',
       'os-name': '.',
       'os-version': '.',
       'app-version': '.',
       'uuid': '.',
+      'X-API-KEY': 'UhuO0gcCmnnYqJDHAQVjJMY2XK8oud2U5BlfeXcRqPTdEtJ0zB3NnRatM1kO',
+      'Cookie': 'JSESSIONID=--p3w_9ueOznK6NANWBde1BpA0XcoxzGaj-25UOp.d489dc141a8c',
+      'Secret-Key': 'R8VRPGU0RUT3+QJH2ychumFxuYm9n+9fH7wKi/hxiBLohw4eW1/FKJMtkffxVrt6//fBx31Q1GaCMOHVjbuziw==',
+      'Authorization': 'Bearer $token',
     };
   }
 
-  Future<Response> clientGetData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers}) async {
+  Future<Response> clientGetData(
+    String uri, {
+    String? baseUrl,
+    Map<String, dynamic>? query,
+    Map<String, String>? headers,
+  }) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: ${getAuthorizationHeader()}');
       http.Response response = await http
           .get(
-            Uri.parse(AppConstants.baseUrl + uri),
+            Uri.parse((baseUrl ?? AppConstants.baseUrl) + uri),
             headers: headers ?? getAuthorizationHeader(),
           )
           .timeout(Duration(seconds: timeoutInSeconds));
@@ -51,14 +66,20 @@ class IBaseRepository {
     }
   }
 
-  Future<Response> clientPostData(String uri, dynamic body, {Map<String, String>? headers}) async {
+  Future<Response> clientPostData(
+    String uri,
+    dynamic body, {
+    String? baseUrl,
+    Map<String, String>? headers,
+  }) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: ${getAuthorizationHeader()}');
       debugPrint('====> API Body: $body');
       http.Response response = await http
           .post(
-            Uri.parse(AppConstants.baseUrl + uri),
-            body: body,
+            Uri.parse((baseUrl ?? AppConstants.baseUrl) + uri),
+            // body: body,
+            body: jsonEncode(body),
             headers: headers ?? getAuthorizationHeader(),
           )
           .timeout(Duration(seconds: timeoutInSeconds));
@@ -148,10 +169,16 @@ class IBaseRepository {
       if (response0.body.toString().startsWith('{errors: [{code:')) {
         ErrorResponse errorResponse = ErrorResponse.fromJson(response0.body);
         response0 = Response(
-            statusCode: response0.statusCode, body: response0.body, statusText: errorResponse.errors![0].message);
+          statusCode: response0.statusCode,
+          body: response0.body,
+          statusText: errorResponse.errors![0].message,
+        );
       } else if (response0.body.toString().startsWith('{message')) {
-        response0 =
-            Response(statusCode: response0.statusCode, body: response0.body, statusText: response0.body['message']);
+        response0 = Response(
+          statusCode: response0.statusCode,
+          body: response0.body,
+          statusText: response0.body['message'],
+        );
       }
     } else if (response0.statusCode != 200 && response0.body == null) {
       response0 = Response(statusCode: 0, statusText: noInternetMessage);
@@ -168,7 +195,8 @@ class IBaseRepository {
   }
 
   Future<void> _logout() async {
-    await LocalStorage.clearAll();
+    await LocalStorage.remove(SharedKey.isLoggedIn);
+    await LocalStorage.remove(SharedKey.token);
 
     Get.offAllNamed(Routes.SPLASH);
   }

@@ -130,7 +130,7 @@ class DialogUtils {
   ) {
     toastification.show(
       context: Get.context!,
-      title: Text(content),
+      title: Text(content, maxLines: 3, overflow: TextOverflow.ellipsis),
       autoCloseDuration: const Duration(seconds: 3),
       showProgressBar: false,
       type: ToastificationType.success,
@@ -148,7 +148,7 @@ class DialogUtils {
   static showErrorDialog(String content) {
     toastification.show(
       context: Get.context!,
-      title: Text(content),
+      title: Text(content, maxLines: 3, overflow: TextOverflow.ellipsis),
       autoCloseDuration: const Duration(seconds: 3),
       showProgressBar: false,
       type: ToastificationType.error,

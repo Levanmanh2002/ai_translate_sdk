@@ -4,9 +4,12 @@ import 'package:get/get_connect/http/src/response/response.dart';
 
 class TranslateRepository extends ITranslateRepository {
   @override
-  Future<Response> getRoom(int id, int limit) async {
+  Future<Response> getRoom({required String id, required int skip, required int limit}) async {
     try {
-      final result = await clientGetData('${AppConstants.getRoom}$id?limit=$limit');
+      final result = await clientGetData(
+        '${AppConstants.getRoom}$id?skip=$skip&limit=$limit',
+        baseUrl: AppConstants.baseUrl3,
+      );
 
       return result;
     } catch (error) {
@@ -30,7 +33,7 @@ class TranslateRepository extends ITranslateRepository {
   @override
   Future<Response> sendMessage(Map<String, dynamic> params) async {
     try {
-      final result = await clientPostData(AppConstants.sendMessage, params);
+      final result = await clientPostData(AppConstants.sendMessage, params, baseUrl: AppConstants.baseUrl2);
 
       return result;
     } catch (error) {
