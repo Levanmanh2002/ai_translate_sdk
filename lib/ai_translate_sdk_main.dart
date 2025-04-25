@@ -1,5 +1,5 @@
-import 'package:ai_translate/pages/dashboard/dashboard_binding.dart';
-import 'package:ai_translate/pages/dashboard/dashboard_page.dart';
+import 'package:ai_translate/pages/home/home_binding.dart';
+import 'package:ai_translate/pages/home/home_page.dart';
 import 'package:ai_translate/resourese/service/app_service.dart';
 import 'package:ai_translate/utils/local_storage.dart';
 import 'package:ai_translate/widget/reponsive/size_config.dart';
@@ -20,7 +20,7 @@ Future<Widget> initAiTranslateSdk({BoxConstraints? constraints}) async {
     );
   }
 
-  DashboardBinding().dependencies();
+  HomeBinding().dependencies();
 
-  return DashboardPage();
+  return HomePage();
 }
