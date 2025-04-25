@@ -1,7 +1,6 @@
 import 'package:ai_translate/main.dart';
 import 'package:ai_translate/theme/style/style_theme.dart';
 import 'package:ai_translate/widget/image_asset_custom.dart';
-import 'package:ai_translate/widget/reponsive/extension.dart';
 import 'package:flutter/material.dart';
 
 class SelectTabWidget extends StatelessWidget {
@@ -23,12 +22,12 @@ class SelectTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          padding: padding(all: 16),
+          padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: appTheme.whiteColor,
@@ -43,8 +42,8 @@ class SelectTabWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              ImageAssetCustom(imagePath: icon, size: 24.w, color: colorIcon),
-              SizedBox(width: 12.w),
+              ImageAssetCustom(imagePath: icon, size: 24, color: colorIcon),
+              SizedBox(width: 12),
               Text(title, style: StyleThemeData.size14Weight400(color: colorTitle)),
             ],
           ),

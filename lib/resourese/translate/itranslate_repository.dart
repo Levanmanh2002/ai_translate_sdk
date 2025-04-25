@@ -1,5 +1,5 @@
 import 'package:ai_translate/resourese/ibase_repository.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:http/http.dart';
 
 abstract class ITranslateRepository extends IBaseRepository {
   Future<Response> getRoom({required String id, required int skip, required int limit});

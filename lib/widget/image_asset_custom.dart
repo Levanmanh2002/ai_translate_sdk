@@ -1,4 +1,3 @@
-import 'package:ai_translate/widget/reponsive/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -28,24 +27,16 @@ class ImageAssetCustom extends StatelessWidget {
       return SvgPicture.asset(
         imagePath,
         color: color,
-        width: width ?? (sizeBaseOnWidth! ? size?.w : size?.h),
-        height: height != null
-            ? height?.h
-            : sizeBaseOnWidth!
-                ? width?.h
-                : height?.h,
+        width: width ?? (sizeBaseOnWidth! ? size : size),
+        height: height ?? (sizeBaseOnWidth! ? width : height),
         fit: boxFit ?? BoxFit.contain,
       );
     }
     return Image.asset(
       imagePath,
       color: color,
-      width: width ?? (sizeBaseOnWidth! ? size?.w : size?.h),
-      height: height != null
-          ? height?.h
-          : sizeBaseOnWidth!
-              ? width?.h
-              : height?.h,
+      width: width ?? (sizeBaseOnWidth! ? size : size),
+      height: height ?? (sizeBaseOnWidth! ? width : height),
       fit: boxFit ?? BoxFit.contain,
     );
   }

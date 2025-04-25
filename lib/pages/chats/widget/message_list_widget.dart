@@ -2,7 +2,6 @@ import 'package:ai_translate/main.dart';
 import 'package:ai_translate/theme/style/style_theme.dart';
 import 'package:ai_translate/utils/icons_assets.dart';
 import 'package:ai_translate/widget/image_asset_custom.dart';
-import 'package:ai_translate/widget/reponsive/extension.dart';
 import 'package:flutter/material.dart';
 
 class MessageListWidget extends StatelessWidget {
@@ -22,14 +21,14 @@ class MessageListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding(vertical: 2),
+      padding: EdgeInsets.symmetric(vertical: 2),
       child: Align(
         alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
         child: InkWell(
           onTap: onTap,
           child: Container(
-            constraints: BoxConstraints(maxWidth: 300.w),
-            padding: padding(all: 8),
+            constraints: BoxConstraints(maxWidth: 300),
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isCurrentUser ? appTheme.appColor : appTheme.whiteColor,
@@ -45,8 +44,8 @@ class MessageListWidget extends StatelessWidget {
                   ),
                 ),
                 if (audio.isNotEmpty) ...[
-                  SizedBox(height: 4.h),
-                  ImageAssetCustom(imagePath: IconsAssets.audioBorderIcon, size: 24.w),
+                  SizedBox(height: 4),
+                  ImageAssetCustom(imagePath: IconsAssets.audioBorderIcon, size: 24),
                 ],
               ],
             ),

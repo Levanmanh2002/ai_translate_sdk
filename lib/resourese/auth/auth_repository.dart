@@ -1,6 +1,6 @@
 import 'package:ai_translate/resourese/auth/iauth_repository.dart';
 import 'package:ai_translate/utils/app_constants.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:http/http.dart';
 
 class AuthRepository extends IAuthRepository {
   @override
