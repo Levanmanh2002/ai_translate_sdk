@@ -30,6 +30,7 @@ class ImageAssetCustom extends StatelessWidget {
         width: width ?? (sizeBaseOnWidth! ? size : size),
         height: height ?? (sizeBaseOnWidth! ? width : height),
         fit: boxFit ?? BoxFit.contain,
+        package: 'ai_translate',
       );
     }
     return Image.asset(
@@ -38,6 +39,7 @@ class ImageAssetCustom extends StatelessWidget {
       width: width ?? (sizeBaseOnWidth! ? size : size),
       height: height ?? (sizeBaseOnWidth! ? width : height),
       fit: boxFit ?? BoxFit.contain,
+      package: 'ai_translate',
     );
   }
 }

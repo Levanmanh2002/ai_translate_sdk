@@ -179,11 +179,13 @@ class _ChatPageState extends State<ChatPage> {
   void toggleLanguage(Languages language) {
     selectedLanguage.value = language;
     LocalStorage.setString(SharedKey.language, language.toString());
+    setState(() {});
   }
 
   void toggleFromLanguage(Languages language) {
     fromLang.value = language;
     LocalStorage.setString(SharedKey.fromLanguage, language.toString());
+    setState(() {});
   }
 
   Timer? _noSpeechTimer;
